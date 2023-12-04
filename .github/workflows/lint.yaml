@@ -37,6 +37,8 @@ jobs:
 
       - name: Run foundry node, deploy contracts (& generate contracts typescript output)
         run: yarn chain & yarn deploy
+        env:
+          ETHERSCAN_API_KEY: DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW
 
       - name: Run nextjs lint
         run: yarn next:lint --max-warnings=0
