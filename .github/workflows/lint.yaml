@@ -30,8 +30,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
-        run: yarn chain & yarn deploy 
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Run foundry node, deploy contracts (& generate contracts typescript output)
+        run: yarn chain & yarn deploy
 
       - name: Run nextjs lint
         run: yarn next:lint --max-warnings=0
