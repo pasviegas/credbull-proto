@@ -38,6 +38,8 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
     );
   }
 
+  console.log(`Deployed Contract Data\n`, deployedContractData);
+
   return (
     <div className={`grid grid-cols-1 lg:grid-cols-6 px-6 lg:px-10 lg:gap-12 w-full max-w-7xl my-0 ${className}`}>
       <div className="col-span-5 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
@@ -48,7 +50,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 <span className="font-bold">{contractName}</span>
                 <Address address={deployedContractData.address} />
                 <div className="flex gap-1 items-center">
-                  <span className="font-bold text-sm">Balance:</span>
+                  <span className="font-bold text-sm">Balance: 123123</span>
                   <Balance address={deployedContractData.address} className="px-0 h-1.5 min-h-[0.375rem]" />
                 </div>
               </div>

@@ -1,57 +1,83 @@
-import Link from "next/link";
+import { Abi, AbiFunction } from "abitype";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useAccount, useContractRead } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { Spinner } from "~~/components/assets/Spinner";
+import { WriteOnlyFunctionForm, getFunctionInputKey } from "~~/components/scaffold-eth";
+import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 
-const Home: NextPage = () => {
+const Lending: NextPage = () => {
+  const { address } = useAccount();
+
+  const { data: deployedStable, isLoading: isLoadingStable } = useDeployedContractInfo("MockStableCoin");
+  const { data: deployedVault, isLoading: isLoadingVault } = useDeployedContractInfo("CredbullVault");
+  const { data: deployedDelegate, isLoading: isLoadingDelegate } =
+    useDeployedContractInfo("CredbullActiveVaultDelegate");
+
+  const { data: vaultAddress, isLoading: isLoadingActiveVault } = useContractRead({
+    functionName: "activeVault",
+    address: deployedDelegate?.address,
+    abi: deployedDelegate?.abi,
+    enabled: Boolean(deployedDelegate?.address),
+  });
+
+  if (
+    isLoadingStable ||
+    !deployedStable ||
+    isLoadingVault ||
+    !deployedVault ||
+    !address ||
+    isLoadingDelegate ||
+    !deployedDelegate ||
+    isLoadingActiveVault ||
+    !vaultAddress
+  ) {
+    return (
+      <div className="mt-14">
+        <Spinner width="50px" height="50px" />
+      </div>
+    );
+  }
+
+  const approve = (deployedStable.abi as Abi).find(
+    part => part.type === "function" && part.name === "approve",
+  ) as AbiFunction;
+
+  const deposit = (deployedVault.abi as Abi).find(
+    part => part.type === "function" && part.name === "deposit",
+  ) as AbiFunction;
+
   return (
     <>
-      <MetaHeader />
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/pages/index.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
-                </Link>{" "}
-                tab.
-              </p>
+      <MetaHeader
+        title="Debug Contracts | Scaffold-ETH 2"
+        description="Debug your deployed 🏗 Scaffold-ETH 2 contracts in an easy way"
+      />
+      <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+        <div className="z-10">
+          <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col mt-10 relative w-[40rem] m-auto">
+            <div className="h-[5rem] w-[13rem] bg-base-300 absolute self-start rounded-[22px] -top-[38px] -left-[1px] -z-10 py-[0.65rem] shadow-lg shadow-base-300">
+              <div className="flex items-center justify-center space-x-2">
+                <p className="my-0 text-sm">Active Lending Pool</p>
+              </div>
             </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
+            <div className="p-5 divide-y divide-base-300">
+              <WriteOnlyFunctionForm
+                abiFunction={approve}
+                onChange={() => ({})}
+                contractAddress={vaultAddress}
+                inputs={{
+                  [getFunctionInputKey(approve.name, approve.inputs[0], 0)]: vaultAddress,
+                }}
+              />
+              <WriteOnlyFunctionForm
+                abiFunction={deposit}
+                onChange={() => ({})}
+                contractAddress={vaultAddress}
+                inputs={{
+                  [getFunctionInputKey(deposit.name, deposit.inputs[1], 1)]: address,
+                }}
+              />
             </div>
           </div>
         </div>
@@ -60,4 +86,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Lending;

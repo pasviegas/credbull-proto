@@ -16,10 +16,16 @@ type ReadOnlyFunctionFormProps = {
   contractAddress: Address;
   abiFunction: AbiFunction;
   inheritedFrom?: string;
+  inputs?: Record<string, string>;
 };
 
-export const ReadOnlyFunctionForm = ({ contractAddress, abiFunction, inheritedFrom }: ReadOnlyFunctionFormProps) => {
-  const [form, setForm] = useState<Record<string, any>>(() => getInitialFormState(abiFunction));
+export const ReadOnlyFunctionForm = ({
+  contractAddress,
+  abiFunction,
+  inheritedFrom,
+  ...props
+}: ReadOnlyFunctionFormProps) => {
+  const [form, setForm] = useState<Record<string, any>>(() => getInitialFormState(abiFunction, props.inputs || {}));
   const [result, setResult] = useState<unknown>();
 
   const { isFetching, refetch } = useContractRead({

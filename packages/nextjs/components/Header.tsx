@@ -14,11 +14,15 @@ type HeaderMenuLink = {
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: "Home",
+    label: "Lending",
     href: "/",
   },
+  // {
+  //   label: "Home",
+  //   href: "/lending",
+  // },
   {
-    label: "Debug Contracts",
+    label: "Debug",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
   },

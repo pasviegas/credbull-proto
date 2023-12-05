@@ -8,11 +8,14 @@ export const ContractReadMethods = ({ deployedContractData }: { deployedContract
   }
 
   const functionsToDisplay = (
-    ((deployedContractData.abi || []) as Abi).filter(part => part.type === "function") as AbiFunction[]
+    ((deployedContractData.abi || []) as Abi).filter(part => {
+      return part.type === "function";
+    }) as AbiFunction[]
   )
     .filter(fn => {
       const isQueryableWithParams =
         (fn.stateMutability === "view" || fn.stateMutability === "pure") && fn.inputs.length > 0;
+
       return isQueryableWithParams;
     })
     .map(fn => {

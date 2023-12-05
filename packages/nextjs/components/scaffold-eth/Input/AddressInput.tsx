@@ -3,6 +3,7 @@ import { blo } from "blo";
 import { useDebounce } from "usehooks-ts";
 import { Address, isAddress } from "viem";
 import { useEnsAddress, useEnsAvatar, useEnsName } from "wagmi";
+import { useAccount } from "wagmi";
 import { CommonInputProps, InputBase, isENS } from "~~/components/scaffold-eth";
 
 /**
@@ -11,6 +12,12 @@ import { CommonInputProps, InputBase, isENS } from "~~/components/scaffold-eth";
 export const AddressInput = ({ value, name, placeholder, onChange, disabled }: CommonInputProps<Address | string>) => {
   // Debounce the input to keep clean RPC calls when resolving ENS names
   // If the input is an address, we don't need to debounce it
+  const { address } = useAccount();
+  useEffect(() => {
+    if (placeholder === "address _balanceToken" && address !== undefined) {
+      onChange(address);
+    }
+  }, [placeholder, address]);
   const _debouncedValue = useDebounce(value, 500);
   const debouncedValue = isAddress(value) ? value : _debouncedValue;
   const isDebouncedValueLive = debouncedValue === value;
