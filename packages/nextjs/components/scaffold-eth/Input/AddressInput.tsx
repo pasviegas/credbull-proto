@@ -17,7 +17,7 @@ export const AddressInput = ({ value, name, placeholder, onChange, disabled }: C
     if (placeholder === "address _balanceToken" && address !== undefined) {
       onChange(address);
     }
-  }, [placeholder, address]);
+  }, [placeholder, address, onChange]);
   const _debouncedValue = useDebounce(value, 500);
   const debouncedValue = isAddress(value) ? value : _debouncedValue;
   const isDebouncedValueLive = debouncedValue === value;
