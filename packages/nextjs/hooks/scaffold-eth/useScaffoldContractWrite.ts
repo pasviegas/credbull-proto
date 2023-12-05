@@ -28,8 +28,9 @@ export const useScaffoldContractWrite = <
   value,
   onBlockConfirmation,
   blockConfirmations,
+  address,
   ...writeConfig
-}: UseScaffoldWriteConfig<TContractName, TFunctionName>) => {
+}: UseScaffoldWriteConfig<TContractName, TFunctionName> & { address: string | undefined }) => {
   const { data: deployedContractData } = useDeployedContractInfo(contractName);
   const { chain } = useNetwork();
   const writeTx = useTransactor();
@@ -38,7 +39,7 @@ export const useScaffoldContractWrite = <
 
   const wagmiContractWrite = useContractWrite({
     chainId: targetNetwork.id,
-    address: deployedContractData?.address,
+    address: address ?? deployedContractData?.address,
     abi: deployedContractData?.abi as Abi,
     functionName: functionName as any,
     args: args as unknown[],

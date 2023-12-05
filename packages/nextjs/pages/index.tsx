@@ -1,16 +1,16 @@
-import { Abi, AbiFunction } from "abitype";
+import { useState } from "react";
 import type { NextPage } from "next";
 import { useAccount, useContractRead } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { Spinner } from "~~/components/assets/Spinner";
-import { WriteOnlyFunctionForm, getFunctionInputKey } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
+import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const Lending: NextPage = () => {
+  const [amount, setAmount] = useState(0);
+
   const { address } = useAccount();
 
   const { data: deployedStable, isLoading: isLoadingStable } = useDeployedContractInfo("MockStableCoin");
-  const { data: deployedVault, isLoading: isLoadingVault } = useDeployedContractInfo("CredbullVault");
   const { data: deployedDelegate, isLoading: isLoadingDelegate } =
     useDeployedContractInfo("CredbullActiveVaultDelegate");
 
@@ -21,11 +21,35 @@ const Lending: NextPage = () => {
     enabled: Boolean(deployedDelegate?.address),
   });
 
+  const { writeAsync: writeApprove } = useScaffoldContractWrite({
+    contractName: "MockStableCoin",
+    functionName: "approve",
+    args: [vaultAddress as string, BigInt(amount)],
+    address: deployedStable?.address,
+  });
+
+  const { writeAsync: writeDeposit } = useScaffoldContractWrite({
+    contractName: "CredbullVault",
+    functionName: "deposit",
+    args: [BigInt(amount), address],
+    address: vaultAddress as string,
+  });
+
+  const { data } = useScaffoldContractRead({
+    contractName: "CredbullVault",
+    functionName: "balanceOf",
+    args: [address],
+    address: vaultAddress as string,
+  });
+
+  const onClick = async () => {
+    await writeApprove();
+    await writeDeposit();
+  };
+
   if (
     isLoadingStable ||
     !deployedStable ||
-    isLoadingVault ||
-    !deployedVault ||
     !address ||
     isLoadingDelegate ||
     !deployedDelegate ||
@@ -38,14 +62,6 @@ const Lending: NextPage = () => {
       </div>
     );
   }
-
-  const approve = (deployedStable.abi as Abi).find(
-    part => part.type === "function" && part.name === "approve",
-  ) as AbiFunction;
-
-  const deposit = (deployedVault.abi as Abi).find(
-    part => part.type === "function" && part.name === "deposit",
-  ) as AbiFunction;
 
   return (
     <>
@@ -62,22 +78,21 @@ const Lending: NextPage = () => {
               </div>
             </div>
             <div className="p-5 divide-y divide-base-300">
-              <WriteOnlyFunctionForm
-                abiFunction={approve}
-                onChange={() => ({})}
-                contractAddress={vaultAddress}
-                inputs={{
-                  [getFunctionInputKey(approve.name, approve.inputs[0], 0)]: vaultAddress,
-                }}
-              />
-              <WriteOnlyFunctionForm
-                abiFunction={deposit}
-                onChange={() => ({})}
-                contractAddress={vaultAddress}
-                inputs={{
-                  [getFunctionInputKey(deposit.name, deposit.inputs[1], 1)]: address,
-                }}
-              />
+              <div className={`flex border-2 border-base-300 bg-base-200 rounded-full text-accent`}>
+                <input
+                  className="input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                  onChange={e => setAmount(parseInt(e.target.value))}
+                  type="number"
+                />
+              </div>
+              <div className="flex gap-2  pt-3">
+                <div>LPT balance: {data?.toString()}</div>
+                <div className={`flex m-auto`}>
+                  <button className="btn btn-secondary btn-sm" onClick={onClick}>
+                    Deposit
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
