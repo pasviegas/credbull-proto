@@ -77,7 +77,7 @@ const Lending: NextPage = () => {
                 <p className="my-0 text-sm">Active Lending Pool</p>
               </div>
             </div>
-            <div className="p-5 divide-y divide-base-300">
+            <div className="p-7 divide-y divide-transparent h-30">
               <div className={`flex border-2 border-base-300 bg-base-200 rounded-full text-accent`}>
                 <input
                   className="input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
@@ -86,7 +86,9 @@ const Lending: NextPage = () => {
                 />
               </div>
               <div className="flex gap-2  pt-3">
-                <div>LPT balance: {data?.toString()}</div>
+                <div className={`flex m-auto`}>LPT balance: {data?.toString()}</div>
+              </div>
+              <div className="flex gap-2  pt-3">
                 <div className={`flex m-auto`}>
                   <button className="btn btn-secondary btn-sm" onClick={onClick}>
                     Deposit
