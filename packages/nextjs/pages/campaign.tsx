@@ -34,7 +34,7 @@ const CampaignPage: NextPage = () => {
     };
 
     fetchData();
-  }, [campaigns]);
+  }, []);
 
   return (
     <>
