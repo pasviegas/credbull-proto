@@ -37,8 +37,8 @@ const CampaignPage: NextPage = () => {
 
   return (
     <>
-      <h1>Welcome to Campaign</h1>
       <div className={styles.container}>
+        <h1>Welcome to Campaigns</h1>
         <CampaignTable campaigns={campaigns} />
       </div>
     </>

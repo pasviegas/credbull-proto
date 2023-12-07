@@ -2,33 +2,33 @@
 
 .container {
     display: flex;
-    justify-content: center;
-    align-content: center
-}
-
-.table-container {
+    flex-direction: column; /* Change to column direction */
+    justify-content: flex-start; /* Align items at the start (top) */
+    align-items: center; /* Center items horizontally */
+  }
+  
+  .table-container {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
     margin: 20px 0;
     border-collapse: collapse;
-}
-
-.th,
-.td {
+  }
+  
+  .th,
+  .td {
     padding: 10px;
-    text-align: left;
-}
-
-.th {
-    background-color: #67729D;
+    text-align: center;
+  }
+  
+  .th {
+    background-color: #67729d;
     font-weight: bold;
-}
-
-.td {
-    background-color: #EEF5FF;
-    color: #2B2A4C;
-
-}
-
-/* Add more styles as needed */
+  }
+  
+  .td {
+    background-color: #eef5ff;
+    color: #2b2a4c;
+    border: 1px dotted;
+  }
+  

@@ -36,8 +36,14 @@ const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns }) => {
               <td className={styles.td}>{campaign.is_active ? "Yes" : "No"}</td>
               <td className={styles.td}>{campaign.points}</td>
               <td className={styles.td}>
-                <button disabled={!campaign.is_active} onClick={() => handleUpdateClickedCount(campaign.points)}>
-                  Earn points
+                <button
+                  disabled={!campaign.is_active}
+                  className={`${
+                    !campaign.is_active ? "btn-disabled " : ""
+                  } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+                  onClick={() => handleUpdateClickedCount(campaign.points)}
+                >
+                  Engage
                 </button>
               </td>
             </tr>
