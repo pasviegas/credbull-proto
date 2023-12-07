@@ -16,24 +16,25 @@ interface CampaignResponse {
 const CampaignPage: NextPage = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("/api/campaign");
-
-      if (response.ok) {
-        const data: CampaignResponse = await response.json();
-        setCampaigns(data.campaigns);
-        console.log("response", campaigns);
-      } else {
-        console.error("Failed to fetch campaigns");
-      }
-    } catch (error) {
-      console.error("Error fetching campaigns:", error);
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/campaign");
+
+        if (response.ok) {
+          const data: CampaignResponse = await response.json();
+          setCampaigns(data.campaigns);
+          console.log("response", campaigns);
+        } else {
+          console.error("Failed to fetch campaigns");
+        }
+      } catch (error) {
+        console.error("Error fetching campaigns:", error);
+      }
+    };
+
     fetchData();
-  }, []);
+  }, [campaigns]);
 
   return (
     <>
