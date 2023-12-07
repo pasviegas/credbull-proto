@@ -1,0 +1,33 @@
+/* CampaignTable.module.css */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+.th,
+.td {
+    padding: 10px;
+    border: 1px solid #892121;
+    text-align: left;
+}
+
+.th {
+    background-color: #892121;
+    font-weight: bold;
+}
+
+.td {
+    background-color: #892121;
+}
+
+/* Add more styles as needed */
