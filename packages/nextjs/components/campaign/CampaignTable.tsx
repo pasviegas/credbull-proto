@@ -1,17 +1,35 @@
 // CampaignTable.js
-import React, { useState } from "react";
+import React from "react";
 import { Campaign } from "~~/interfaces/campaign";
+import { usePointState } from "~~/services/store/points";
 import styles from "~~/styles/CampaignTable.module.css";
 
 interface CampaignTableProps {
   campaigns: Campaign[];
+  address: any;
 }
 
-const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns }) => {
-  const [pointCount, setpointCount] = useState<number>(0);
+const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns, address }) => {
+  const { set: setPoints, point: accumulatedPoints } = usePointState();
 
-  const handleUpdateClickedCount = (points: number) => {
-    setpointCount(pointCount + points);
+  const handleUpdateClickedCount = (_points: number) => {
+    const points = accumulatedPoints + _points;
+    console.log(`points \n`, accumulatedPoints);
+
+    fetch(`/api/points/${address}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ points }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.points);
+        // setpointCount(data.points);
+        setPoints(data.points);
+      })
+      .catch(error => console.error("Error:", error));
   };
 
   return (
@@ -50,9 +68,6 @@ const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns }) => {
           ))}
         </tbody>
       </table>
-      <div>
-        <p>Overall Total Points: {pointCount}</p>
-      </div>
     </div>
   );
 };
