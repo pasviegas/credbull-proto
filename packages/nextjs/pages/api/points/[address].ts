@@ -13,6 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: { address: String(address) },
       });
 
+      if (!data) {
+        await prisma.points.create({
+          data: { address: String(address) },
+        });
+      }
+
       res.status(200).json({ success: true, points: data?.points });
     } catch (error) {
       console.error("Error fetching data:", error);
