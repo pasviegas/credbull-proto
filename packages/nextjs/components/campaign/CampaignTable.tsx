@@ -16,14 +16,16 @@ const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns, currentPoints,
     setpointCount(currentPoints);
   }, [currentPoints]);
 
-  const handleUpdateClickedCount = (points: number) => {
-    setpointCount(pointCount + points);
+  const handleUpdateClickedCount = (_points: number) => {
+    const points = pointCount + _points;
+    setpointCount(points);
+
     fetch(`/api/points/${address}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ points: pointCount }),
+      body: JSON.stringify({ points }),
     })
       .then(response => response.json())
       .then(data => console.log(data))
