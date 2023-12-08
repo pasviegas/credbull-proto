@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import CampaignTable from "~~/components/campaign/CampaignTable";
 import { Campaign } from "~~/interfaces/campaign";
+import { usePointState } from "~~/services/store/points";
 import styles from "~~/styles/CampaignTable.module.css";
 
 /**
@@ -17,7 +18,8 @@ interface CampaignResponse {
 const CampaignPage: NextPage = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const { address } = useAccount();
-  const [points, setPoints] = useState<number>(0);
+  const [, setPoints] = useState<number>(0);
+  const { point: accumulatedPoints, set: setAccumulatedPoints } = usePointState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +42,7 @@ const CampaignPage: NextPage = () => {
         if (pointResponse.ok) {
           const pointsData = await pointResponse.json();
           setPoints(pointsData?.points || 0);
+          setAccumulatedPoints(pointsData?.points || 0);
         } else {
           console.error("Failed to fetch points");
         }
@@ -54,8 +57,22 @@ const CampaignPage: NextPage = () => {
   return (
     <>
       <div className={styles.container}>
+        <div
+          className="btn "
+          style={{
+            alignSelf: "flex-end",
+            marginRight: 50,
+            borderRadius: 20,
+            marginTop: 10,
+            backgroundColor: "#395284",
+            // padding: 5,
+            // boxShadow: "",
+          }}
+        >
+          <p>Overall Total Points: {accumulatedPoints}</p>
+        </div>
         <h1>Welcome to Campaigns </h1>
-        <CampaignTable campaigns={campaigns} currentPoints={points} address={address} />
+        <CampaignTable campaigns={campaigns} address={address} />
       </div>
     </>
   );

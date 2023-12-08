@@ -1,24 +1,20 @@
 // CampaignTable.js
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Campaign } from "~~/interfaces/campaign";
+import { usePointState } from "~~/services/store/points";
 import styles from "~~/styles/CampaignTable.module.css";
 
 interface CampaignTableProps {
   campaigns: Campaign[];
-  currentPoints: number;
   address: any;
 }
 
-const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns, currentPoints, address }) => {
-  const [pointCount, setpointCount] = useState<number>(currentPoints);
-
-  useEffect(() => {
-    setpointCount(currentPoints);
-  }, [currentPoints]);
+const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns, address }) => {
+  const { set: setPoints, point: accumulatedPoints } = usePointState();
 
   const handleUpdateClickedCount = (_points: number) => {
-    const points = pointCount + _points;
-    setpointCount(points);
+    const points = accumulatedPoints + _points;
+    console.log(`points \n`, accumulatedPoints);
 
     fetch(`/api/points/${address}`, {
       method: "PUT",
@@ -28,7 +24,11 @@ const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns, currentPoints,
       body: JSON.stringify({ points }),
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data.points);
+        // setpointCount(data.points);
+        setPoints(data.points);
+      })
       .catch(error => console.error("Error:", error));
   };
 
@@ -68,9 +68,6 @@ const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns, currentPoints,
           ))}
         </tbody>
       </table>
-      <div>
-        <p>Overall Total Points: {pointCount}</p>
-      </div>
     </div>
   );
 };
