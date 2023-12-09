@@ -17,20 +17,15 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Lending",
     href: "/",
   },
-  // {
-  //   label: "Home",
-  //   href: "/lending",
-  // },
+  {
+    label: "Engage",
+    href: "/campaign",
+    icon: <CubeIcon className="h-4 w-4" />,
+  },
   {
     label: "Debug",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
-  },
-
-  {
-    label: "Campaign",
-    href: "/campaign",
-    icon: <CubeIcon className="h-4 w-4" />,
   },
 ];
 
