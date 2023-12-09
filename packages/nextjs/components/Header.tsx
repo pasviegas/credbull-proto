@@ -18,6 +18,11 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/",
   },
   {
+    label: "Previous Loans",
+    href: "/previous-loans",
+    icon: <CubeIcon className="h-4 w-4" />,
+  },
+  {
     label: "Engage",
     href: "/campaign",
     icon: <CubeIcon className="h-4 w-4" />,

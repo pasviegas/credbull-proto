@@ -12,7 +12,4 @@ contract MockStableCoin is ERC20 {
         _mint(to, amount);
     }
 
-    function getBalance(address _balanceToken) public view returns (uint256) {
-        return balanceOf(_balanceToken);
-    }
 }

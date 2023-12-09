@@ -3,8 +3,10 @@ pragma solidity ^0.8.19;
 
 import "../contracts/CredbullVault.sol";
 import "../contracts/CredbullActiveVaultDelegate.sol";
+import "../contracts/CredbullMaturedVaults.sol";
 import "../contracts/mocks/MockStableCoin.sol";
 import "../contracts/mocks/MockCustodian.sol";
+import "../contracts/mocks/MockMaturityExecution.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -20,15 +22,23 @@ contract DeployScript is ScaffoldETHDeploy {
 
         vm.startBroadcast(deployerPrivateKey);
 
+        CredbullMaturedVaults matured = new CredbullMaturedVaults();
         MockCustodian custodian = new MockCustodian();
+        MockMaturityExecution executor = new MockMaturityExecution(custodian, matured);
+        custodian.transferOwnership(address(executor));
+
         MockStableCoin token = new MockStableCoin();
         CredbullVault vault = new CredbullVault(token, address(custodian), "LPT", "Liquid Pool Token");
+        vault.transferOwnership(address(executor));
+
         CredbullActiveVaultDelegate delegate = new CredbullActiveVaultDelegate(address(vault));
 
         console.logString(string.concat("Deployer Private Key: ", vm.toString(deployerPrivateKey)));
         console.logString(string.concat("CredbullVault deployed at: ", vm.toString(address(vault))));
         console.logString(string.concat("CredbullActiveVaultDelegate deployed at: ", vm.toString(address(delegate))));
         console.logString(string.concat("MockCustodian deployed at: ", vm.toString(address(custodian))));
+        console.logString(string.concat("MockMaturityExecution deployed at: ", vm.toString(address(executor))));
+        console.logString(string.concat("CredbullMaturedVaults deployed at: ", vm.toString(address(matured))));
 
         vm.stopBroadcast();
 
