@@ -6,6 +6,7 @@ import "../contracts/CredbullActiveVaultDelegate.sol";
 import "../contracts/CredbullMaturedVaults.sol";
 import "../contracts/mocks/MockStableCoin.sol";
 import "../contracts/mocks/MockCustodian.sol";
+import "../contracts/mocks/MockTreasury.sol";
 import "../contracts/mocks/MockMaturityExecution.sol";
 import "./DeployHelpers.s.sol";
 
@@ -24,7 +25,8 @@ contract DeployScript is ScaffoldETHDeploy {
 
         CredbullMaturedVaults matured = new CredbullMaturedVaults();
         MockCustodian custodian = new MockCustodian();
-        MockMaturityExecution executor = new MockMaturityExecution(custodian, matured);
+        MockTreasury treasury = new MockTreasury();
+        MockMaturityExecution executor = new MockMaturityExecution(custodian, treasury, matured);
         custodian.transferOwnership(address(executor));
 
         MockStableCoin token = new MockStableCoin();
