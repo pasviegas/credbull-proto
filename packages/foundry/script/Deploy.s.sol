@@ -30,7 +30,8 @@ contract DeployScript is ScaffoldETHDeploy {
         custodian.transferOwnership(address(executor));
 
         MockStableCoin token = new MockStableCoin();
-        CredbullVault vault = new CredbullVault(token, address(custodian), "LPT", "Liquid Pool Token");
+        CredbullVault vault =
+            new CredbullVault(token, address(custodian), "LPT", "Liquid Pool Token", uint64(block.timestamp), 60);
         vault.transferOwnership(address(executor));
 
         CredbullActiveVaultDelegate delegate = new CredbullActiveVaultDelegate(address(vault));

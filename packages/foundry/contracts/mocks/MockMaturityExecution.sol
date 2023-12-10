@@ -25,6 +25,10 @@ contract MockMaturityExecution {
         CredbullVault vault = CredbullVault(_vault);
         IERC20 asset = IERC20(vault.asset());
 
+        if(!vault.maturityReached()) {
+            revert CredbullVault.SharesNotMatured();
+        }
+
         uint256 principalAndYield = vault.totalAssets().mulDiv(110, 100);
         custodian.withdraw(address(asset), address(vault), principalAndYield);
 

@@ -5,6 +5,17 @@ import { MetaHeader } from "~~/components/MetaHeader";
 import { Spinner } from "~~/components/assets/Spinner";
 import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
+function timeConverter(timestamp: number) {
+  const a = new Date(timestamp * 1000);
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const year = a.getFullYear();
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  const hour = a.getHours();
+  const min = a.getMinutes();
+  return date + " " + month + " " + year + " " + hour + ":" + min;
+}
+
 const Lending: NextPage = () => {
   const [amount, setAmount] = useState(0);
 
@@ -42,6 +53,12 @@ const Lending: NextPage = () => {
     address: vaultAddress as string,
   });
 
+  const { data: maturity } = useScaffoldContractRead({
+    contractName: "CredbullVault",
+    functionName: "maturity",
+    address: vaultAddress as string,
+  });
+
   const onClick = async () => {
     await writeApprove();
     await writeDeposit();
@@ -54,7 +71,8 @@ const Lending: NextPage = () => {
     isLoadingDelegate ||
     !deployedDelegate ||
     isLoadingActiveVault ||
-    !vaultAddress
+    !vaultAddress ||
+    !maturity
   ) {
     return (
       <div className="mt-14">
@@ -86,7 +104,10 @@ const Lending: NextPage = () => {
                 />
               </div>
               <div className="flex gap-2  pt-3">
-                <div className={`flex m-auto`}>LPT balance: {data?.toString()}</div>
+                <div className={`flex`}>LPT balance: {data?.toString()}</div>
+                {!!maturity && (
+                  <div className={`flex m-auto`}>Maturity: {timeConverter(parseInt(maturity.toString()))}</div>
+                )}
               </div>
               <div className="flex gap-2  pt-3">
                 <div className={`flex m-auto`}>

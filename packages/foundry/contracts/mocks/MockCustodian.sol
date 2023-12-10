@@ -5,8 +5,7 @@ import { IERC20 } from "@openzeppelin/contracts/interfaces/IERC20.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MockCustodian is Ownable {
-
-    constructor() Ownable(_msgSender()) {}
+    constructor() Ownable(_msgSender()) { }
 
     function withdraw(address _asset, address _vault, uint256 _amount) external onlyOwner {
         IERC20 asset = IERC20(_asset);
