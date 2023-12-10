@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Bars3Icon, BugAntIcon, CubeIcon } from "@heroicons/react/24/outline";
+import { BadgeAvatar } from "~~/components/BadgeAvatar";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -110,6 +111,7 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
+        <BadgeAvatar size={30} />
         <RainbowKitCustomConnectButton />
         <FaucetButton />
       </div>

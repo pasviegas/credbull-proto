@@ -51,6 +51,7 @@ const Lending: NextPage = () => {
     functionName: "balanceOf",
     args: [address],
     address: vaultAddress as string,
+    watch: true,
   });
 
   const { data: maturity } = useScaffoldContractRead({

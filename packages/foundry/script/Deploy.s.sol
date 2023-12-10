@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 import "../contracts/CredbullVault.sol";
+import "../contracts/CredbullBadge.sol";
 import "../contracts/CredbullActiveVaultDelegate.sol";
 import "../contracts/CredbullMaturedVaults.sol";
 import "../contracts/mocks/MockStableCoin.sol";
@@ -35,6 +36,11 @@ contract DeployScript is ScaffoldETHDeploy {
         vault.transferOwnership(address(executor));
 
         CredbullActiveVaultDelegate delegate = new CredbullActiveVaultDelegate(address(vault));
+
+        CredbullBadge badge = new CredbullBadge();
+        badge.safeMint(address(badge), 1);
+        badge.safeMint(address(badge), 2);
+        badge.safeMint(address(badge), 3);
 
         console.logString(string.concat("Deployer Private Key: ", vm.toString(deployerPrivateKey)));
         console.logString(string.concat("CredbullVault deployed at: ", vm.toString(address(vault))));
