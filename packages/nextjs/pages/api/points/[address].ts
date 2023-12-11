@@ -1,8 +1,6 @@
 // pages/api/campaigns/[address].ts
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../db";
 import { NextApiRequest, NextApiResponse } from "next";
-
-const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { address } = req.query;
@@ -23,8 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (error) {
       console.error("Error fetching data:", error);
       res.status(500).json({ success: false, error: "Internal Server Error" });
-    } finally {
-      await prisma.$disconnect();
     }
   } else if (req.method === "PUT") {
     try {
@@ -43,8 +39,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (error) {
       console.error("Error updating data:", error);
       res.status(500).json({ success: false, error: "Internal Server Error" });
-    } finally {
-      await prisma.$disconnect();
     }
   } else {
     res.status(405).json({ success: false, error: "Method Not Allowed" });

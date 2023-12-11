@@ -10,20 +10,26 @@ export const BadgeAvatar = (props: { size: number }) => {
     functionName: "tier",
     address: deployedVault?.address,
     abi: deployedVault?.abi,
+    // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
     args: [address!],
     enabled: Boolean(deployedVault?.address),
     watch: true,
   });
 
+  const onClick = async () => {
+    await fetch("/api/refresh-tier");
+  };
+
   return (
     (tier ?? 0) > 0 && (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        className="rounded-full"
+        className="rounded-full cursor-pointer"
         src={`https://placehold.co/${props.size}?text=${tier}`}
         width={props.size}
         height={props.size}
         alt={`${tier} avatar`}
+        onClick={onClick}
       />
     )
   );
