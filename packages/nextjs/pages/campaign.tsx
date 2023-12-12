@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import CampaignTable from "~~/components/campaign/CampaignTable";
+import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { Campaign } from "~~/interfaces/campaign";
 import { usePointState } from "~~/services/store/points";
 import styles from "~~/styles/CampaignTable.module.css";
@@ -21,6 +22,22 @@ const CampaignPage: NextPage = () => {
   const [, setPoints] = useState<number>(0);
   const [rp, setRp] = useState<number>(0);
   const { point: accumulatedPoints, set: setAccumulatedPoints, redeem: redeem } = usePointState();
+
+  const { data: deployedStable } = useDeployedContractInfo("MockCBL");
+
+  const { data: balance } = useScaffoldContractRead({
+    contractName: "MockCBL",
+    functionName: "balanceOf",
+    args: [address as string],
+    address: deployedStable?.address as string,
+  });
+
+  const { writeAsync: rewardCBL } = useScaffoldContractWrite({
+    contractName: "MockCBL",
+    functionName: "mint",
+    args: [address, BigInt(rp)],
+    address: deployedStable?.address as string,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,6 +128,18 @@ const CampaignPage: NextPage = () => {
         >
           Redeem
         </button>
+        <button
+          className="btn"
+          style={{
+            alignSelf: "flex-end",
+            marginRight: 50,
+            borderRadius: 20,
+            marginTop: 10,
+            backgroundColor: "#395284",
+          }}
+        >
+          CBL: {balance?.toString()}
+        </button>
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Hello!</h3>
@@ -128,11 +157,12 @@ const CampaignPage: NextPage = () => {
                 {/* if there is a button in form, it will close the modal */}
                 <button className="btn">Close</button>
               </form>
-
               <button
                 className="btn"
                 disabled={accumulatedPoints < rp}
                 onClick={() => {
+                  rewardCBL();
+
                   redeemPointsOnClick(rp);
                 }}
               >
