@@ -21,7 +21,7 @@ export const BadgeAvatar = (props: { size: number }) => {
   };
 
   return (
-    ((tier as number) ?? 0) > 0 && (
+    parseInt((tier ?? "0").toString()) > 0 && (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         className="rounded-full cursor-pointer"

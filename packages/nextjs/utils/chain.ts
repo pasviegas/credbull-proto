@@ -1,3 +1,3 @@
-import * as chains from "viem/chains";
+import { goerli } from "viem/chains";
 
-export const targetNetwork = chains[process.env.NEXT_PUBLIC_TARGET_NETWORK as keyof typeof chains] || chains.foundry;
+export const targetNetwork = goerli;
