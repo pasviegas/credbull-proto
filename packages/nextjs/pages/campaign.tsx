@@ -28,14 +28,14 @@ const CampaignPage: NextPage = () => {
   const { data: balance } = useScaffoldContractRead({
     contractName: "MockCBL",
     functionName: "balanceOf",
-    args: [address as string],
+    args: [address as any],
     address: deployedStable?.address as string,
   });
 
   const { writeAsync: rewardCBL } = useScaffoldContractWrite({
     contractName: "MockCBL",
     functionName: "mint",
-    args: [address, BigInt(rp)],
+    args: [address as any, BigInt(rp)],
     address: deployedStable?.address as string,
   });
 

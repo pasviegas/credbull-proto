@@ -35,21 +35,21 @@ const Lending: NextPage = () => {
   const { writeAsync: writeApprove } = useScaffoldContractWrite({
     contractName: "MockStableCoin",
     functionName: "approve",
-    args: [vaultAddress as string, BigInt(amount)],
+    args: [vaultAddress as any, BigInt(amount)],
     address: deployedStable?.address,
   });
 
   const { writeAsync: writeDeposit } = useScaffoldContractWrite({
     contractName: "CredbullVault",
     functionName: "deposit",
-    args: [BigInt(amount), address],
+    args: [BigInt(amount), address as any],
     address: vaultAddress as string,
   });
 
   const { data } = useScaffoldContractRead({
     contractName: "CredbullVault",
     functionName: "balanceOf",
-    args: [address],
+    args: [address as any],
     address: vaultAddress as string,
     watch: true,
   });
