@@ -2,11 +2,6 @@ import prisma from "../../db";
 import { Contract, Wallet, getDefaultProvider } from "ethers";
 import type { NextApiRequest, NextApiResponse } from "next";
 import deployedContracts from "~~/contracts/deployedContracts";
-import { targetNetwork } from "~~/utils/chain";
-
-const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
-const provider = getDefaultProvider("goerli");
-const signer = new Wallet(privateKey, provider);
 
 type Status = {
   success: boolean;
@@ -20,8 +15,7 @@ function splitToNChunks(array: any[], n: number) {
   return result;
 }
 
-const networkId = targetNetwork.id as keyof typeof deployedContracts;
-const contract = deployedContracts[networkId].CredbullBadge;
+const contract = deployedContracts[5].CredbullBadge;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
   const points = await prisma.points.findMany();
@@ -29,6 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const chunks = splitToNChunks(points, 3);
 
+  const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
+  const provider = getDefaultProvider("goerli");
+  const signer = new Wallet(privateKey, provider);
   const badge = new Contract(contract.address, contract.abi, signer);
 
   for (const point of chunks[0]) {
