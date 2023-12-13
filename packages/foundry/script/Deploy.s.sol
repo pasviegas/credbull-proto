@@ -9,6 +9,7 @@ import "../contracts/mocks/MockStableCoin.sol";
 import "../contracts/mocks/MockCustodian.sol";
 import "../contracts/mocks/MockTreasury.sol";
 import "../contracts/mocks/MockMaturityExecution.sol";
+import "../contracts/mocks/MockCBL.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -27,6 +28,7 @@ contract DeployScript is ScaffoldETHDeploy {
         CredbullMaturedVaults matured = new CredbullMaturedVaults();
         MockCustodian custodian = new MockCustodian();
         MockTreasury treasury = new MockTreasury();
+        MockCBL rewards = new MockCBL();
         MockMaturityExecution executor = new MockMaturityExecution(custodian, treasury, matured);
         custodian.transferOwnership(address(executor));
 
@@ -48,6 +50,7 @@ contract DeployScript is ScaffoldETHDeploy {
         console.logString(string.concat("MockCustodian deployed at: ", vm.toString(address(custodian))));
         console.logString(string.concat("MockMaturityExecution deployed at: ", vm.toString(address(executor))));
         console.logString(string.concat("CredbullMaturedVaults deployed at: ", vm.toString(address(matured))));
+        console.logString(string.concat("MockCBL deployed at: ", vm.toString(address(rewards))));
 
         vm.stopBroadcast();
 
