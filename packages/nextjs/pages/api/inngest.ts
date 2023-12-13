@@ -4,10 +4,6 @@ import { Inngest } from "inngest";
 import { serve } from "inngest/next";
 import deployedContracts from "~~/contracts/deployedContracts";
 
-export const config = {
-  maxDuration: 300,
-};
-
 const contract = deployedContracts[5].CredbullBadge;
 
 function splitToNChunks(array: any[], n: number) {
