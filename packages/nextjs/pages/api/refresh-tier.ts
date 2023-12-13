@@ -1,13 +1,16 @@
 import prisma from "../../db";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createWalletClient, http } from "viem";
-import { foundry } from "viem/chains";
+import { privateKeyToAccount } from "viem/accounts";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { targetNetwork } from "~~/utils/chain";
 
+const account = privateKeyToAccount(process.env.DEPLOYER_PRIVATE_KEY as any);
+
 const client = createWalletClient({
-  chain: foundry,
+  chain: targetNetwork,
   transport: http(),
+  account,
 });
 
 type Status = {
