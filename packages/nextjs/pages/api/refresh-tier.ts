@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createWalletClient, http } from "viem";
 import { foundry } from "viem/chains";
 import deployedContracts from "~~/contracts/deployedContracts";
+import { targetNetwork } from "~~/utils/chain";
 
 const client = createWalletClient({
   chain: foundry,
@@ -21,7 +22,8 @@ function splitToNChunks(array: any[], n: number) {
   return result;
 }
 
-const contract = deployedContracts[foundry.id].CredbullBadge;
+const networkId = targetNetwork.id as keyof typeof deployedContracts;
+const contract = deployedContracts[networkId].CredbullBadge;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
   const points = await prisma.points.findMany();

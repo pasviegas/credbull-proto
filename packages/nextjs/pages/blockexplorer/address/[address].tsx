@@ -15,6 +15,7 @@ import {
 import { Address, Balance } from "~~/components/scaffold-eth";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useFetchBlocks } from "~~/hooks/scaffold-eth";
+import { targetNetwork } from "~~/utils/chain";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 type AddressCodeTabProps = {
@@ -156,7 +157,7 @@ async function fetchByteCodeAndAssembly(buildInfoDirectory: string, contractPath
 export const getServerSideProps: GetServerSideProps = async context => {
   const address = (context.params?.address as string).toLowerCase();
   const contracts = deployedContracts as GenericContractsDeclaration | null;
-  const chainId = foundry.id;
+  const chainId = targetNetwork.id;
   let contractPath = "";
 
   const buildInfoDirectory = path.join(__dirname, "..", "..", "..", "..", "..", "..", "foundry", "out", "build-info");

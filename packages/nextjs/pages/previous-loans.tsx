@@ -9,13 +9,15 @@ const MaturedPool = ({ vault }: { vault: string }) => {
 
   const { data: deployedVault } = useDeployedContractInfo("CredbullVault");
 
-  const { data: returns } = useContractRead({
+  const { data } = useContractRead({
     functionName: "loanReturns",
     address: deployedVault?.address,
     abi: deployedVault?.abi,
     args: [address!],
     enabled: Boolean(deployedVault?.address),
   });
+
+  const returns = data as any;
 
   return (
     <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col mt-10 relative w-[40rem] m-auto">
@@ -37,12 +39,14 @@ const MaturedPool = ({ vault }: { vault: string }) => {
 const PreviousLoans: NextPage = () => {
   const { data: deployedMatured, isLoading: isLoadingMatured } = useDeployedContractInfo("CredbullMaturedVaults");
 
-  const { data: vaultAddress, isLoading: isLoadingActiveVault } = useContractRead({
+  const { data, isLoading: isLoadingActiveVault } = useContractRead({
     functionName: "getMaturedVaults",
     address: deployedMatured?.address,
     abi: deployedMatured?.abi,
     enabled: Boolean(deployedMatured?.address),
   });
+
+  const vaultAddress = data as string;
 
   if (isLoadingMatured || !deployedMatured || isLoadingActiveVault || !vaultAddress) {
     return (
