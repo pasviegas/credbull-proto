@@ -1,17 +1,12 @@
 import prisma from "../../db";
+import { Contract, Wallet, getDefaultProvider } from "ethers";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createWalletClient, http } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { targetNetwork } from "~~/utils/chain";
 
-const account = privateKeyToAccount(process.env.DEPLOYER_PRIVATE_KEY as any);
-
-const client = createWalletClient({
-  chain: targetNetwork,
-  transport: http(),
-  account,
-});
+const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
+const provider = getDefaultProvider("goerli");
+const signer = new Wallet(privateKey, provider);
 
 type Status = {
   success: boolean;
@@ -34,36 +29,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const chunks = splitToNChunks(points, 3);
 
-  const [address] = await client.getAddresses();
+  const badge = new Contract(contract.address, contract.abi, signer);
 
   for (const point of chunks[0]) {
-    await client.writeContract({
-      account: address,
-      address: contract.address,
-      abi: contract.abi,
-      functionName: "setTier",
-      args: [point.address, BigInt(1)],
-    });
+    await badge.setTier(point.address, BigInt(1));
   }
 
   for (const point of chunks[1]) {
-    await client.writeContract({
-      account: address,
-      address: contract.address,
-      abi: contract.abi,
-      functionName: "setTier",
-      args: [point.address, BigInt(2)],
-    });
+    await badge.setTier(point.address, BigInt(2));
   }
 
   for (const point of chunks[2]) {
-    await client.writeContract({
-      account: address,
-      address: contract.address,
-      abi: contract.abi,
-      functionName: "setTier",
-      args: [point.address, BigInt(3)],
-    });
+    await badge.setTier(point.address, BigInt(3));
   }
 
   res.status(200).json({ success: true });
