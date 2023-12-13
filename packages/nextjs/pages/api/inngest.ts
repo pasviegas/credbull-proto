@@ -1,5 +1,5 @@
 import prisma from "../../db";
-import { Contract, Wallet, getDefaultProvider } from "ethers";
+import { Contract, InfuraProvider, Wallet } from "ethers";
 import { Inngest } from "inngest";
 import { serve } from "inngest/next";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -25,7 +25,7 @@ const refreshTierFn = inngest.createFunction(
   { event: "ethers/refresh.tier" },
   async ({ event, step }) => {
     const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
-    const provider = getDefaultProvider("goerli");
+    const provider = new InfuraProvider("goerli", process.env.INFURA_API_KEY);
     const signer = new Wallet(privateKey, provider);
     const badge = new Contract(contract.address, contract.abi, signer) as any;
 
