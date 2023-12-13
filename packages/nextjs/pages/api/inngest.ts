@@ -21,7 +21,7 @@ function splitToNChunks(array: any[], n: number) {
 export const inngest = new Inngest({ id: "credbull-proto" });
 
 const refreshTierFn = inngest.createFunction(
-  { id: "refresh-tier-fn" },
+  { id: "refresh-tier-fn", retries: 10 },
   { event: "ethers/refresh.tier" },
   async ({ event, step }) => {
     const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
