@@ -228,7 +228,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11, @emotion/react@npm:^11.8.2":
+"@emotion/react@npm:11.11.3, @emotion/react@npm:^11.8.2":
   version: 11.11.3
   resolution: "@emotion/react@npm:11.11.3"
   dependencies:
@@ -460,7 +460,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/core@npm:5, @mantine/core@npm:^5.10.4":
+"@mantine/core@npm:5.10.5, @mantine/core@npm:^5.10.4":
   version: 5.10.5
   resolution: "@mantine/core@npm:5.10.5"
   dependencies:
@@ -477,7 +477,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/form@npm:5, @mantine/form@npm:^5.10.4":
+"@mantine/form@npm:5.10.5, @mantine/form@npm:^5.10.4":
   version: 5.10.5
   resolution: "@mantine/form@npm:5.10.5"
   dependencies:
@@ -489,7 +489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/hooks@npm:5, @mantine/hooks@npm:^5.10.4":
+"@mantine/hooks@npm:5.10.5, @mantine/hooks@npm:^5.10.4":
   version: 5.10.5
   resolution: "@mantine/hooks@npm:5.10.5"
   peerDependencies:
@@ -498,7 +498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/notifications@npm:5, @mantine/notifications@npm:^5.10.4":
+"@mantine/notifications@npm:5.10.5, @mantine/notifications@npm:^5.10.4":
   version: 5.10.5
   resolution: "@mantine/notifications@npm:5.10.5"
   dependencies:
@@ -1034,7 +1034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:1, @tabler/icons@npm:^1.119.0":
+"@tabler/icons@npm:1.119.0, @tabler/icons@npm:^1.119.0":
   version: 1.119.0
   resolution: "@tabler/icons@npm:1.119.0"
   peerDependencies:
@@ -1793,11 +1793,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "credbull-proto@workspace:."
   dependencies:
-    "@emotion/react": "npm:11"
-    "@mantine/core": "npm:5"
-    "@mantine/form": "npm:5"
-    "@mantine/hooks": "npm:5"
-    "@mantine/notifications": "npm:5"
+    "@emotion/react": "npm:11.11.3"
+    "@mantine/core": "npm:5.10.5"
+    "@mantine/form": "npm:5.10.5"
+    "@mantine/hooks": "npm:5.10.5"
+    "@mantine/notifications": "npm:5.10.5"
     "@refinedev/core": "npm:^4.46.0"
     "@refinedev/mantine": "npm:^2.29.0"
     "@refinedev/nextjs-router": "npm:^5.5.4"
@@ -1805,7 +1805,7 @@ __metadata:
     "@refinedev/supabase": "npm:^5.7.3"
     "@supabase/ssr": "npm:^0.0.10"
     "@supabase/supabase-js": "npm:^2.39.1"
-    "@tabler/icons": "npm:1"
+    "@tabler/icons": "npm:1.119.0"
     "@tanstack/react-table": "npm:^8.11.2"
     "@trivago/prettier-plugin-sort-imports": "npm:^4.3.0"
     "@types/node": "npm:^20.10.5"
@@ -1815,7 +1815,7 @@ __metadata:
     eslint-config-next: "npm:13.5.6"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-prettier: "npm:^5.1.2"
-    husky: "npm:^8.0.0"
+    husky: "npm:^8.0.3"
     lint-staged: "npm:^15.2.0"
     next: "npm:13.5.6"
     prettier: "npm:3.1.1"
@@ -2911,7 +2911,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.0":
+"husky@npm:^8.0.3":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
