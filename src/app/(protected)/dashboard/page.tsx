@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/clients/supabase.server';
 
+import { Routes } from '@/utils/routes';
+
 export default async function Dashboard() {
   const supabase = createClient(cookies());
   const { data: auth } = await supabase.auth.getUser();
@@ -11,7 +13,7 @@ export default async function Dashboard() {
     'use server';
     const supabase = createClient(cookies());
     await supabase.auth.signOut();
-    redirect('/');
+    redirect(Routes.HOME);
   };
 
   return (

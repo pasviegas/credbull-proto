@@ -4,9 +4,12 @@ import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { createClient } from '@/clients/supabase.server';
-import RefineProvider from '@/components/refine-provider';
-import StyleProvider from '@/components/style-provider';
-import '@/utils/env';
+
+import { RefineProvider } from '@/components/refine.provider';
+import { StyleProvider } from '@/components/style.provider';
+
+import '@/utils/ensure-env';
+import { Routes, Segments } from '@/utils/routes';
 import { getSegment } from '@/utils/rsc';
 
 export const metadata: Metadata = {
@@ -19,7 +22,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
   const { data: auth } = await supabase.auth.getUser();
 
   const segment = getSegment(props);
-  if (auth.user && segment !== '(protected)') redirect('/dashboard');
+  if (auth.user && segment !== Segments.PROTECTED) redirect(Routes.DASHBOARD);
 
   return (
     <html lang="en">

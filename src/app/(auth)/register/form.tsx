@@ -2,6 +2,6 @@
 
 import { AuthPage } from '@refinedev/mantine';
 
-export default function RegisterForm() {
+export function RegisterForm() {
   return <AuthPage title="Credbull DeFI" type="register" />;
 }

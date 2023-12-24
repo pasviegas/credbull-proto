@@ -5,5 +5,5 @@ module.exports = {
   printWidth: 120,
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-  importOrder: ['^@(.*)$', '^[./]'],
+  importOrder: ['^@/clients/(.*)$', '^@/components/(.*)$', '^@/utils/(.*)$', '^@/app/(.*)$', '^@public/(.*)$', '^[./]'],
 };

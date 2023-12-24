@@ -2,7 +2,7 @@
 
 import { AuthPage } from '@refinedev/mantine';
 
-export default function SignInForm() {
+export function SignInForm() {
   return (
     <AuthPage
       type="login"
