@@ -1,41 +1,49 @@
 {
-  "name": "se-2",
-  "version": "0.0.1",
+  "name": "credbull-proto",
+  "version": "0.1.0",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
   "scripts": {
-    "account": "yarn workspace @se-2/foundry account",
-    "chain": "yarn workspace @se-2/foundry chain",
-    "compile": "yarn workspace @se-2/foundry compile",
-    "deploy": "yarn workspace @se-2/foundry deploy",
-    "deploy:verify": "yarn workspace @se-2/foundry deploy:verify",
-    "fork": "yarn workspace @se-2/foundry fork",
-    "foundry:lint": "yarn workspace @se-2/foundry lint",
-    "foundry:test": "yarn workspace @se-2/foundry test",
-    "generate": "yarn workspace @se-2/foundry generate",
-    "postinstall": "husky install",
-    "next:check-types": "yarn workspace @se-2/nextjs check-types",
-    "next:format": "yarn workspace @se-2/nextjs format",
-    "next:lint": "yarn workspace @se-2/nextjs lint",
-    "precommit": "lint-staged",
-    "prepare": "install-self-peers -- --ignore-scripts",
-    "start": "yarn workspace @se-2/nextjs dev",
-    "inngest": "npx inngest-cli@latest dev",
-    "test": "yarn foundry:test",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
-    "verify": "yarn workspace @se-2/foundry verify"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:precommit": "eslint --fix --ignore-path .gitignore",
+    "format": "prettier . --write",
+    "postinstall": "husky install"
   },
-  "resolutions": {
-    "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch"
+  "dependencies": {
+    "@emotion/react": "11",
+    "@mantine/core": "5",
+    "@mantine/form": "5",
+    "@mantine/hooks": "5",
+    "@mantine/notifications": "5",
+    "@refinedev/core": "^4.46.0",
+    "@refinedev/mantine": "^2.29.0",
+    "@refinedev/nextjs-router": "^5.5.4",
+    "@refinedev/react-table": "^5.6.4",
+    "@refinedev/supabase": "^5.7.3",
+    "@supabase/ssr": "^0.0.10",
+    "@supabase/supabase-js": "^2.39.1",
+    "@tabler/icons": "1",
+    "@tanstack/react-table": "^8.11.2",
+    "next": "13.5.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "husky": "~8.0.3",
-    "lint-staged": "~13.2.2"
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "13.5.6",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "3.1.1",
+    "typescript": "4.9.5"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@4.0.2"
 }
