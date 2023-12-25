@@ -1,6 +1,6 @@
 import { generateMock } from '@anatine/zod-mock';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ForgotPasswordParams, LoginParams, RegisterParams, createProvider } from '@/app/(auth)/provider';
@@ -8,7 +8,7 @@ import { ForgotPasswordParams, LoginParams, RegisterParams, createProvider } fro
 describe('provider', () => {
   const fixture = () => {
     const client = mockDeep<SupabaseClient>();
-    const provider = createProvider({ client, origin: '/root' });
+    const provider = createProvider({ client, origin: () => '/root' });
     return { client, provider };
   };
 

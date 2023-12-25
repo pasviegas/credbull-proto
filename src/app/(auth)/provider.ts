@@ -8,7 +8,7 @@ import { Routes } from '@/utils/routes';
 
 export const ProviderContext = z.object({
   client: z.custom<SupabaseClient>(),
-  origin: z.string().url(),
+  origin: z.function().args(z.void()).returns(z.string()),
 });
 type ProviderContext = z.infer<typeof ProviderContext>;
 
@@ -28,7 +28,7 @@ async function login(ctx: ProviderContext, params: LoginParams) {
   if (providerName) {
     const { data, error } = await client.auth.signInWithOAuth({
       provider: providerName,
-      options: { redirectTo: `${origin}${Routes.CODE_CALLBACK}` },
+      options: { redirectTo: `${origin()}${Routes.CODE_CALLBACK}` },
     });
 
     if (error) return { success: false, error };
@@ -54,7 +54,7 @@ async function register(ctx: ProviderContext, params: RegisterParams) {
   try {
     const { data, error } = await client.auth.signUp({
       ...params,
-      options: { emailRedirectTo: `${origin}${Routes.CODE_CALLBACK}` },
+      options: { emailRedirectTo: `${origin()}${Routes.CODE_CALLBACK}` },
     });
 
     if (error) return { success: false, error };
@@ -77,7 +77,7 @@ async function forgotPassword(ctx: ProviderContext, params: ForgotPasswordParams
 
   try {
     const { data, error } = await client.auth.resetPasswordForEmail(params.email, {
-      redirectTo: `${origin}${Routes.UPDATE_PASSWORD}`,
+      redirectTo: `${origin()}${Routes.UPDATE_PASSWORD}`,
     });
 
     if (error) return { success: false, error };
@@ -160,4 +160,4 @@ export const createProvider = (ctx: ProviderContext): AuthBindings => {
   };
 };
 
-export const provider: AuthBindings = createProvider({ client: supabase, origin: window.location.origin });
+export const provider: AuthBindings = createProvider({ client: supabase, origin: () => window.location.origin });
