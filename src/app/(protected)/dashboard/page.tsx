@@ -1,3 +1,4 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -22,6 +23,7 @@ export default async function Dashboard() {
       <form action={signOut}>
         <button>Logout</button>
       </form>
+      <ConnectButton />
     </div>
   );
 }
