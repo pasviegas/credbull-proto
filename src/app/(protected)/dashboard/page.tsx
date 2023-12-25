@@ -1,10 +1,11 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/clients/supabase.server';
 
 import { Routes } from '@/utils/routes';
+
+import { LinkWallet } from '@/app/(protected)/dashboard/link-wallet';
 
 export default async function Dashboard() {
   const supabase = createClient(cookies());
@@ -23,7 +24,7 @@ export default async function Dashboard() {
       <form action={signOut}>
         <button>Logout</button>
       </form>
-      <ConnectButton />
+      <LinkWallet />
     </div>
   );
 }
