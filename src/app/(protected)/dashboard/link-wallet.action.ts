@@ -14,7 +14,8 @@ export const linkWallet = async (message: string, signature: string) => {
   const { error: verifyError, data } = await new SiweMessage(message).verify({ signature });
   if (verifyError) throw new Error('Failed to verify message');
 
-  await supabase.auth.admin.updateUserById(auth.user!.id, {
-    user_metadata: { address: data.address.toLowerCase() },
+  await supabase.from('user_wallets').insert({
+    user_id: auth.user?.id,
+    address: data.address,
   });
 };

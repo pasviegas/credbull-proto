@@ -1,6 +1,9 @@
 'use client';
 
+import { Tables } from '@/types/supabase';
+import { Flex } from '@mantine/core';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useList } from '@refinedev/core';
 import { useTransition } from 'react';
 import { SiweMessage, generateNonce } from 'siwe';
 import { useAccount, useSignMessage } from 'wagmi';
@@ -8,12 +11,18 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { linkWallet } from '@/app/(protected)/dashboard/link-wallet.action';
 
 export function LinkWallet() {
+  const { refetch } = useList<Tables<'user_wallets'>>({ resource: 'user_wallets' });
+
   const { signMessageAsync } = useSignMessage();
   const [isPending, startTransition] = useTransition();
 
   useAccount({
     onConnect: async ({ address, connector, isReconnected }) => {
       if (isReconnected) return;
+
+      const { data } = await refetch();
+
+      if (data?.data.find((wallet) => wallet.address === address)) return;
 
       const preMessage = new SiweMessage({
         domain: window.location.host,
@@ -31,5 +40,5 @@ export function LinkWallet() {
     },
   });
 
-  return isPending ? <>Linking...</> : <ConnectButton />;
+  return <Flex justify="flex-end">{isPending ? <>Linking...</> : <ConnectButton />}</Flex>;
 }
