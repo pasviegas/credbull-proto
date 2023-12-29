@@ -6,6 +6,7 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "test": "turbo test",
+    "format": "turbo format",
     "dev": "turbo dev",
     "postinstall": "husky install"
   },
