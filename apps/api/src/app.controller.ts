@@ -4,10 +4,15 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly app: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  hello(): ReturnType<AppService['hello']> {
+    return this.app.hello();
+  }
+
+  @Get('/wallets')
+  async wallets(): ReturnType<AppService['wallets']> {
+    return this.app.wallets();
   }
 }
