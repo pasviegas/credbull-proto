@@ -1,6 +1,6 @@
 'use client';
 
-import { Tables } from '@/types/supabase';
+import { Tables } from '@credbull/supabase';
 import { Flex } from '@mantine/core';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useList } from '@refinedev/core';

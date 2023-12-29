@@ -1,0 +1,15 @@
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# vercel
+.vercel
+
+# production
+/build
+
+# typescript
+next-env.d.ts

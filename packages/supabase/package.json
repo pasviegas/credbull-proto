@@ -1,0 +1,21 @@
+{
+  "name": "@credbull/supabase",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "supabase start",
+    "lint": "eslint --fix",
+    "format": "prettier . --write",
+    "gen": "supabase gen types typescript --linked --schema public > src/types/supabase.ts"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "3.1.1",
+    "supabase": "1.129.0",
+    "typescript": "4.9.5"
+  }
+}
