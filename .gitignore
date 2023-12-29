@@ -19,6 +19,13 @@ yarn-error.log*
 # ide
 .idea
 
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
 # yarn
 .yarn/*
 !.yarn/patches
