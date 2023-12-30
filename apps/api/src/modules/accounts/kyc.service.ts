@@ -11,7 +11,7 @@ export class KycService {
     return (await this.checkOnChain(address)) ? KYCStatus.ACTIVE : KYCStatus.REJECTED;
   }
 
-  async checkOnChain(address: string): Promise<boolean> {
+  private async checkOnChain(address: string): Promise<boolean> {
     return Boolean(address);
   }
 }

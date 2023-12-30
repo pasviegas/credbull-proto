@@ -7,7 +7,7 @@ export const logger = WinstonModule.createLogger({
   format: winston.format.combine(...logFormats, winston.format.json()),
   transports: [
     new winston.transports.Console({
-      format: winston.format.combine(...logFormats, utilities.format.nestLike('app', { colors: true })),
+      format: winston.format.combine(...logFormats, utilities.format.nestLike('api', { colors: true })),
     }),
   ],
 });

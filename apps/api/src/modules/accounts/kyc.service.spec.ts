@@ -18,7 +18,7 @@ describe('KycService', () => {
     service = await module.resolve<KycService>(KycService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  it('should have a status method', () => {
+    expect(service.status).toBeDefined();
   });
 });

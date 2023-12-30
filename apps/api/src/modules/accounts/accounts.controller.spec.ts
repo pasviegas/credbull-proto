@@ -17,7 +17,7 @@ describe('AccountsController', () => {
     controller = await module.resolve<AccountsController>(AccountsController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it('should have a status method', () => {
+    expect(controller.status).toBeDefined();
   });
 });

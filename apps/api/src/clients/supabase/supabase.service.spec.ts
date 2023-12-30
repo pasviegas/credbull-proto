@@ -17,7 +17,7 @@ describe('SupabaseService', () => {
     service = await module.resolve<SupabaseService>(SupabaseService);
   });
 
-  it('client should be defined', () => {
+  it('should have a client method', () => {
     expect(service.client).toBeDefined();
   });
 });
