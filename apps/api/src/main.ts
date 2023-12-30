@@ -1,11 +1,13 @@
 import { VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as compression from 'compression';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { logger } from './utils/logger';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const compression = require('compression');
 
 (async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger });
