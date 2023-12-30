@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@supabase/gotrue-js/src/lib/types';
+
+import { EthersService } from '@/clients/ethers/ethers.service';
 
 @Injectable()
 export class KycService {
-  async status(user: User) {
-    return user && 'active';
+  constructor(private readonly ethers: EthersService) {}
+
+  async status(address: string) {
+    return (await this.checkOnChain(address)) && 'active';
+  }
+
+  async checkOnChain(address: string): Promise<boolean> {
+    return Boolean(address);
   }
 }

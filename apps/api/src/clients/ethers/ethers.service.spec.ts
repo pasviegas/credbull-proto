@@ -16,7 +16,7 @@ describe('EthersService', () => {
     service = await module.resolve<EthersService>(EthersService);
   });
 
-  it('client should be defined', () => {
-    expect(service.client).toBeDefined();
+  it('deployer should be defined', () => {
+    expect(service.deployer).toBeDefined();
   });
 });

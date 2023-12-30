@@ -1,4 +1,4 @@
-import { Controller, Get, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Controller, Get } from '@nestjs/common';
 
 import { SupabaseService } from '@/clients/supabase/supabase.service';
 import { KycService } from '@/modules/accounts/kyc.service';
@@ -12,10 +12,10 @@ export class AccountsController {
 
   @Get('status')
   async status() {
-    const { data: auth } = await this.supabase.client().auth.getUser();
+    const { data } = await this.supabase.client().from('user_wallets').select().single();
 
-    if (!auth.user) throw UnauthorizedException;
+    if (!data?.address) throw new BadRequestException();
 
-    return this.kyc.status(auth.user);
+    return this.kyc.status(data.address);
   }
 }
