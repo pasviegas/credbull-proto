@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
+import { ClassSerializerInterceptor, Module, ValidationPipe } from '@nestjs/common';
+import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 import { SupabaseGuard } from '@/clients/supabase/auth/supabase.guard';
 import { AccountsModule } from '@/modules/accounts/accounts.module';
@@ -11,9 +11,11 @@ import { AppController } from './app.controller';
   imports: [Config.module(), AccountsModule],
   controllers: [AppController],
   providers: [
+    { provide: APP_GUARD, useClass: SupabaseGuard },
+    { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
     {
-      provide: APP_GUARD,
-      useClass: SupabaseGuard,
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({ whitelist: true, transform: true }),
     },
   ],
 })
