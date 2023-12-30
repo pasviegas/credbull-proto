@@ -13,7 +13,7 @@ describe('AppController', () => {
     controller = await app.resolve<AppController>(AppController);
   });
 
-  it('should return "Hello World!"', () => {
-    expect(controller.hello()).toBe('Hello World!');
+  it('should return "0.0.1"', () => {
+    expect(controller.version()).toBe('0.0.1');
   });
 });
