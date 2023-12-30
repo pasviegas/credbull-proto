@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { Config } from '@/utils/module';
+import { Config } from '../../utils/module';
 
 import { EthersService } from './ethers.service';
 

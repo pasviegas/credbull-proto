@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { EthersModule } from '@/clients/ethers/ethers.module';
-import { Config } from '@/utils/module';
+import { EthersModule } from '../../clients/ethers/ethers.module';
+import { Config } from '../../utils/module';
 
 import { KycService } from './kyc.service';
 

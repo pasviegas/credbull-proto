@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { EthersService } from '@/clients/ethers/ethers.service';
-import { KYCStatus } from '@/modules/accounts/account-status.dto';
+import { EthersService } from '../../clients/ethers/ethers.service';
+
+import { KYCStatus } from './account-status.dto';
 
 @Injectable()
 export class KycService {

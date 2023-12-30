@@ -463,10 +463,8 @@ __metadata:
     supertest: "npm:^6.3.3"
     ts-loader: "npm:^9.5.1"
     ts-node: "npm:^10.9.2"
-    tsconfig-paths: "npm:^4.2.0"
     typescript: "npm:5.3.3"
     unplugin-swc: "npm:^1.4.4"
-    vite-tsconfig-paths: "npm:^4.2.3"
     vitest: "npm:^1.1.0"
     winston: "npm:^3.11.0"
   languageName: unknown
@@ -13863,7 +13861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:4.2.0, tsconfig-paths@npm:^4.1.2, tsconfig-paths@npm:^4.2.0":
+"tsconfig-paths@npm:4.2.0, tsconfig-paths@npm:^4.1.2":
   version: 4.2.0
   resolution: "tsconfig-paths@npm:4.2.0"
   dependencies:

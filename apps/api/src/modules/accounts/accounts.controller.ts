@@ -1,9 +1,10 @@
 import { BadRequestException, Controller, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { SupabaseService } from '@/clients/supabase/supabase.service';
-import { AccountStatusDto } from '@/modules/accounts/account-status.dto';
-import { KycService } from '@/modules/accounts/kyc.service';
+import { SupabaseService } from '../../clients/supabase/supabase.service';
+
+import { AccountStatusDto } from './account-status.dto';
+import { KycService } from './kyc.service';
 
 @Controller('accounts')
 @ApiBearerAuth()

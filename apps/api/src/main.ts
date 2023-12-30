@@ -4,9 +4,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
 import helmet from 'helmet';
 
-import { logger } from '@/utils/logger';
-
 import { AppModule } from './app.module';
+import { logger } from './utils/logger';
 
 (async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger });
