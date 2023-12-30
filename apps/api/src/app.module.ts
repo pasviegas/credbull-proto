@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 
-import { SupabaseGuard } from '@/supabase/auth/supabase.guard';
+import { EthersModule } from '@/clients/ethers/ethers.module';
+import { SupabaseGuard } from '@/clients/supabase/auth/supabase.guard';
+import { SupabaseModule } from '@/clients/supabase/supabase.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SupabaseModule } from './supabase/supabase.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SupabaseModule } from './supabase/supabase.module';
       envFilePath: ['.env.local'],
     }),
     SupabaseModule,
+    EthersModule,
   ],
   controllers: [AppController],
   providers: [

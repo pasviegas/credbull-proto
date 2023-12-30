@@ -1,7 +1,7 @@
 import { Tables } from '@credbull/supabase';
 import { Injectable } from '@nestjs/common';
 
-import { SupabaseService } from '@/supabase/supabase.service';
+import { SupabaseService } from '@/clients/supabase/supabase.service';
 
 @Injectable()
 export class AppService {

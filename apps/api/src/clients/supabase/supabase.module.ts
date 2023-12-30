@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 
-import { SupabaseStrategy } from '@/supabase/auth/supabase.strategy';
-
+import { SupabaseStrategy } from './auth/supabase.strategy';
 import { SupabaseService } from './supabase.service';
 
 @Module({
