@@ -4,6 +4,8 @@
   "description": "",
   "author": "",
   "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",

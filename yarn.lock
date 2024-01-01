@@ -422,7 +422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credbull/api@workspace:apps/api":
+"@credbull/api@workspace:^, @credbull/api@workspace:apps/api":
   version: 0.0.0-use.local
   resolution: "@credbull/api@workspace:apps/api"
   dependencies:
@@ -490,6 +490,7 @@ __metadata:
   resolution: "@credbull/web@workspace:apps/web"
   dependencies:
     "@anatine/zod-mock": "npm:^3.13.3"
+    "@credbull/api": "workspace:^"
     "@credbull/supabase": "workspace:^"
     "@emotion/react": "npm:11.11.3"
     "@faker-js/faker": "npm:^8.3.1"

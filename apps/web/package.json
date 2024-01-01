@@ -16,6 +16,7 @@
     "cypress:run": "cypress run"
   },
   "dependencies": {
+    "@credbull/api": "workspace:^",
     "@credbull/supabase": "workspace:^",
     "@emotion/react": "11.11.3",
     "@mantine/core": "5.10.5",
